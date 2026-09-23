@@ -1,0 +1,61 @@
++dvt_init
+
+// Shallow compile everything
++dvt_shallow_compile+FILE+*
+
+// Full compile apb_subsystem_top - uvm environment is included in this module
+// Full compile apb_subsystem_tb.build_env - it is called in build_phase, instead of creating uvm_components directly in build_phase
++dvt_shallow_compile+MODULE+not+apb_subsystem_top
++dvt_shallow_compile+FUNCTION+not+apb_subsystem_top.apb_subsystem_tb.build_env
+
+// Full compile function for UVM Component creation and TLM port connections
++dvt_shallow_compile+FUNCTION+not+*get_type
++dvt_shallow_compile+FUNCTION+not+*get_object_type
++dvt_shallow_compile+FUNCTION+not+*get_type_name
++dvt_shallow_compile+FUNCTION+not+*create
++dvt_shallow_compile+FUNCTION+not+*__m_uvm_field_automation
++dvt_shallow_compile+FUNCTION+not+*build_phase
++dvt_shallow_compile+FUNCTION+not+*connect_phase
++dvt_shallow_compile+FUNCTION+not+*new
+
++dvt_compile_waivers_file+.dvt/shallow_compile_waivers.xml
+
++dvt_setenv+UVM_HOME=$DVT_PREDEFINED_PROJECTS/libs/uvm-1.1d
+-uvm
+
++define+LITLE_ENDIAN
++define+UART_ABV_ON
+
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/ahb/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/apb/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/uart/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/spi/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/gpio/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/uart_ctrl/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/uart_ctrl/sv/sequence_lib
++incdir+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/sv/sequence_lib
++incdir+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/tb/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/tb/tests
++incdir+designs/socv/rtl/rtl_lpw/smc/rtl
+
+designs/socv/rtl/rtl_lpw/opencores/uart16550/rtl/uart_defines.v
+designs/socv/rtl/rtl_lpw/opencores/spi/rtl/spi_defines.v
+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/sv/gpio_defines.svh
+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/sv/spi_defines.svh
+soc_verification_lib/sv_cb_ex_lib/uart_ctrl/sv/uart_ctrl_defines.svh
+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/sv/apb_subsystem_defines.svh
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/ahb/sv/ahb_pkg.sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/apb/sv/apb_pkg.sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/uart/sv/uart_pkg.sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/gpio/sv/gpio_pkg.sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/spi/sv/spi_pkg.sv
+soc_verification_lib/sv_cb_ex_lib/uart_ctrl/sv/uart_ctrl_pkg.sv
+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/sv/apb_subsystem_pkg.sv
+
+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/tb/sv/apb_subsystem_top.sv
+
++dvt_env+UVM_REF_HOME=$DVT_PROJECT_LOC
+
+-F designs/socv/rtl/rtl_lpw/socv/rtl/socv.irunargs
+-top apb_subsystem_top

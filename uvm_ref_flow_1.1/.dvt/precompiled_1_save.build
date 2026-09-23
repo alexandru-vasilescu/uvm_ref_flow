@@ -1,0 +1,6 @@
++dvt_precompiled_db_save+precompiled_db
+
++dvt_init
+
++dvt_env+UVM_REF_HOME=$DVT_PROJECT_LOC
+-F designs/socv/rtl/rtl_lpw/socv/rtl/socv.irunargs

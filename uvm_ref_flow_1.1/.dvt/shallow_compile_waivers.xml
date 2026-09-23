@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE waivers PUBLIC "-//DVT//waivers" "waivers.dtd" >
+<waivers version="1">
+	<waiver name="UNDECLARED_IDENTIFIER" severity="DISABLED">
+		<description>Hierarchical access to shallow compiled modules triggers UNDECLARED_IDENTIFIER ERROR</description>
+		<match path="*/uvm_ref_flow_1.1/soc_verification_lib/sv_cb_ex_lib/apb_subsystem/tb/sv/apb_subsystem_top.sv" message="UNDECLARED_IDENTIFIER: Identifier 'i_ahb2apb' is not a member of 'i_apb_subsystem'"/>
+	</waiver>
+</waivers>

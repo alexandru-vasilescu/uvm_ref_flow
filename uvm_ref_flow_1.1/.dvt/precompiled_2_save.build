@@ -1,0 +1,17 @@
++dvt_precompiled_db_save+precompiled_db
+
++dvt_init
+
++dvt_setenv+UVM_HOME=$DVT_PREDEFINED_PROJECTS/libs/uvm-1.1d
+-uvm
+
++define+LITLE_ENDIAN
++define+UART_ABV_ON
+
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/apb/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/ahb/sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/ahb/sv/ahb_defines.sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/ahb/sv/ahb_if.sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/ahb/sv/ahb_pkg.sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/apb/sv/apb_if.sv
+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/apb/sv/apb_pkg.sv

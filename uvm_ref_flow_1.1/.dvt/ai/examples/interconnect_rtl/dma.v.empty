@@ -1,0 +1,160 @@
+//File name   : dma.v
+//Title       : 
+//Created     : 1999
+//Description : DMA top level
+//Notes       : The DMA will interface to both the Bridge and the AHB.  The DMA
+//              control registers will be accessed via the AHB as they require 
+//              32 bit accesses.
+//              This module will instantiate each of the sub modules in the DMA.
+//----------------------------------------------------------------------
+//   Copyright 1999-2010 Cadence Design Systems, Inc.
+//   All Rights Reserved Worldwide
+//
+//   Licensed under the Apache License, Version 2.0 (the
+//   "License"); you may not use this file except in
+//   compliance with the License.  You may obtain a copy of
+//   the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in
+//   writing, software distributed under the License is
+//   distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+//   CONDITIONS OF ANY KIND, either express or implied.  See
+//   the License for the specific language governing
+//   permissions and limitations under the License.
+//----------------------------------------------------------------------
+
+`include   "dma_defs.v"             // DMA defines
+
+//------------------------------------------------------------------------------
+// Module Declaration
+//------------------------------------------------------------------------------
+//
+module dma(
+            hclk,                       // ahb system clock
+            n_hreset,                    // ahb system reset
+            // ahb interface slave signals 
+            dma_hready,                 // hready output from slave
+            dma_hresp,                  // hresp output from slave
+            haddr,                      // input from master
+            hsel,                       // input from master 
+            htrans,                     // input from master
+            hwrite,                     // input from master                
+            hsize,                      // input from master
+            hwdata,                     // input from master
+            hburst,    // Burst type
+            hprot,     // Protection control
+            hmaster,   // Master select
+            hmastlock, // Locked transfer
+            hready_in,      // Transfer done
+
+            dma_hrdata,                 // data output from slave
+            // ahb interface master signals
+            hrdata_dma,                 //
+            hready_dma,
+            hresp_dma,
+            hgrant,
+            dma_haddr,
+            dma_htrans,
+            dma_hwrite,
+            dma_hsize,
+            dma_hburst,
+            dma_hprot,
+            dma_hwdata,
+            dma_hbusreq,
+            dma_hlock,
+            // apb interface master signals
+            //pclk,
+            //presetn,
+            apb_request,
+            dma_penable,
+            dma_pwrite,
+            dma_paddr,
+            dma_pwdata,
+            prdata,
+            pready,
+            // channel control lines
+            data_av0,
+            slot_av0,
+            word_av0,
+            data_av1,
+            slot_av1,
+            word_av1,
+            data_av2,
+            slot_av2,
+            word_av2,
+            byte_access,
+            double_clk,
+            dma_int,
+	  //scan signals
+            scan_en,      // Scan enable pin
+            scan_in,    // Scan input for first chain
+	    scan_out
+            );
+
+//==========================
+// input/output declarations
+//==========================
+
+  input             hclk; //ahb clock
+  input             n_hreset;//ahb reset
+  output            dma_int;//dma interrupt output
+// ahb interface slave signals
+  input    [31:0]   haddr;  //ahb adress bus from mux
+  input             hsel;   //dma select from decoder
+  input     [1:0]   htrans; //ahb transfer type from mux
+  input             hwrite; //ahb write enable from mux
+  input     [2:0]   hsize;  //ahb transfer size from mux
+  input    [31:0]   hwdata; //ahb write data bus from mux
+  input     [2:0]   hburst;    // Burst type
+  input     [3:0]   hprot;     // Protection control
+  input     [3:0]   hmaster;   // Master select
+  input             hmastlock; // Locked transfer
+  input             hready_in;      // Transfer done
+  output            dma_hready;//hready from dma to mux
+  output    [1:0]   dma_hresp; //response from dma to mux
+  output   [31:0]   dma_hrdata;//dma read data to mux
+// ahb interface master signals
+  input    [31:0]   hrdata_dma;//read data from mux to dma
+  input             hready_dma;//ready signal from mux to dma
+  input     [1:0]   hresp_dma; //response signal from mux to dma
+  input             hgrant;    //bus grant from the arbiter
+  output   [31:0]   dma_haddr; //dma ahb address bus
+  output    [1:0]   dma_htrans;//dma ahb transfer type
+  output            dma_hwrite;//dma ahb write enable
+  output    [2:0]   dma_hsize; //dma ahb transfer size
+  output    [2:0]   dma_hburst;//dma ahb burst type
+  output    [3:0]   dma_hprot; //dma ahb protected transfer signal
+  output   [31:0]   dma_hwdata;//dma ahb write data bus
+  output            dma_hbusreq;//dma ahb bus request signal to arbiter
+  output            dma_hlock;  //dma ahb locked transfer
+// apb interface master signals
+  //input             pclk;       //apb clock
+  //input             presetn;    //apb reset
+  output            apb_request;//dma apb request to bridge
+  input    [15:0]   prdata;     //read data bus from apb mux
+  input             pready;     //ready signal from apb mux
+  output            dma_penable;//dma apb enable signal
+  output            dma_pwrite; //dma apb write enable
+  output   [19:0]   dma_paddr;  //dma apb address bus
+  output   [15:0]   dma_pwdata; //dma apb write data bus
+// channel controllines
+  output            byte_access;//byte access output from dma
+  input             double_clk;//ahb clk is twice freq of apb clk
+  input             data_av0;//flow control input from uart 0
+  input             slot_av0;//flow control input from uart 0
+  input             word_av0;//flow control input from uart 0
+  input             data_av1;//flow control input from uart 1
+  input             slot_av1;//flow control input from uart 1
+  input             word_av1;//flow control input from uart 1
+  input             data_av2;//flow control input from uart 2
+  input             slot_av2;//flow control input from uart 2
+  input             word_av2;//flow control input from uart 2
+
+//scan signals
+  input             scan_en;    // Scan enable pin
+  input             scan_in;  // Scan input for first chain
+  output            scan_out;   // Scan out for chain 1
+
+endmodule
