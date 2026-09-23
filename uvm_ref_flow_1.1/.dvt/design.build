@@ -1,0 +1,41 @@
++dvt_wavedrom_file_ext_add+wdjs
+
+//For more details about this directive please visit: https://eda.amiq.com/documentation/eclipse/sv/toc/build-config/including-other-argument-files.html
++dvt_init+ius.irun
+
+//
+// UVM Library
+//
++incdir+$DVT_PREDEFINED_PROJECTS/libs/uvm-1.1b/src
+
+//
+// Project Compilation
+//
+
++define+LITLE_ENDIAN
++define+UART_ABV_ON
+
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/uart/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/spi/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/interface_uvc_lib/gpio/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/uart_ctrl/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/uart_ctrl/sv/sequence_lib
++incdir+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/sv/sequence_lib
++incdir+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/tb/sv
++incdir+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/tb/tests
++incdir+designs/socv/rtl/rtl_lpw/smc/rtl
+
+designs/socv/rtl/rtl_lpw/opencores/uart16550/rtl/uart_defines.v
+designs/socv/rtl/rtl_lpw/opencores/spi/rtl/spi_defines.v
+
+soc_verification_lib/sv_cb_ex_lib/apb_subsystem/tb/sv/apb_subsystem_top.sv
+
++dvt_env+UVM_REF_HOME=$DVT_PROJECT_LOC
+
+// Design files
+-F designs/socv/rtl/rtl_lpw/socv/rtl/socv.irunargs
+-top apb_subsystem_top
+
+// Power format 
+
